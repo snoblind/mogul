@@ -28,7 +28,7 @@ import org.mozilla.javascript.WrappedException;
 public class Main {
 
 	private static final String EXIT_FUNCTION = "function exit(returnCode) { java.lang.System.exit(returnCode == null ? 0 : returnCode); }";
-	private static final String INITIAL_URL = "http://www.w3.org/TR/html5/";
+	private static final String INITIAL_URL = "http://www.nytimes.com/";
 	
 	private static final Answer<Object> ANSWER_UNSUPPORTED_OPERATION = new Answer<Object>() {
 		public Object answer(InvocationOnMock invocation) throws Throwable {

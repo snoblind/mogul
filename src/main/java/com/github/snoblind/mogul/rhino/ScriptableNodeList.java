@@ -34,7 +34,7 @@ public class ScriptableNodeList implements NodeList, Scriptable {
 		if ("length".equals(name)) {
 			return nodeList.getLength();
 		}
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException(String.format("get(%s, %s)", name, start));
 	}
 
 	public Object get(int index, Scriptable start) {
