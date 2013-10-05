@@ -4,7 +4,7 @@ Java interfaces representing the standard JavaScript web objects (window, naviga
 
 [javadoc](http://snoblind.github.io/mogul/apidocs/overview-summary.html)
 
-##EXAMPLE DEMO USAGE
+###Example Demo Usage:
 
 ```bash
 $ mvn clean compile exec:java -q
@@ -17,7 +17,7 @@ for (var i = 0; i < bylines.length; i++) { var story = bylines[i].parentNode; va
 exit()
 ```
 
-###OUTPUT
+####Output:
 U.S. Says Navy SEALs Stage Raid on Somali Militants By NICHOLAS KULISH and ERIC SCHMITT  
 Al Qaeda Suspect Wanted in U.S. Said to Be Taken in Libya By DAVID D. KIRKPATRICK  
 Rallies Nationwide Push Immigration Overhaul By JULIA PRESTON  
