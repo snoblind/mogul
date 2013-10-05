@@ -8,15 +8,13 @@ Java interfaces representing the standard JavaScript web objects (window, naviga
 
 ```
 $ mvn clean compile exec:java -q
-location.href
-http://www.nytimes.com/
 ```
 
 ```javascript
+location.href
+http://www.nytimes.com/
 var bylines = document.querySelectorAll('h6.byline');
 for (var i = 0; i < bylines.length; i++) { var story = bylines[i].parentNode; var headline = story.querySelector('h1,h2,h3,h4,h5,h6,h7,h8'); console.log(headline.innerText.trim() + ' ' + bylines[i].innerText.trim()); }
-```
-
 U.S. Says Navy SEALs Stage Raid on Somali Militants By NICHOLAS KULISH and ERIC SCHMITT
 Al Qaeda Suspect Wanted in U.S. Said to Be Taken in Libya By DAVID D. KIRKPATRICK
 Rallies Nationwide Push Immigration Overhaul By JULIA PRESTON
@@ -29,8 +27,6 @@ The Building Has 1,000 Eyes By JOANNE KAUFMAN
 Deciding Who Sees Students’ Data By NATASHA SINGER
 Character Study By COREY KILGANNON
 Disunion: Maximilian in Mexico By PHIL LEIGH
-
-```javascript
 exit()
 ```
 
