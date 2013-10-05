@@ -7,7 +7,6 @@ import com.github.snoblind.mogul.ExtendedHTMLDocument;
 import com.github.snoblind.mogul.ExtendedHTMLElement;
 import com.github.snoblind.mogul.Window;
 import com.github.snoblind.mogul.event.EventDispatcher;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Attr;
@@ -236,7 +235,7 @@ public class JSoupDocument extends JSoupNode<org.jsoup.nodes.Document> implement
 	}
 
 	public Element getElementById(String elementId) {
-		throw new UnsupportedOperationException();
+		return querySelector(String.format("#%s", elementId));
 	}
 
 	public NodeList getElementsByName(String elementName) {
