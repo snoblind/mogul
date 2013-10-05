@@ -6,7 +6,7 @@ Java interfaces representing the standard JavaScript web objects (window, naviga
 
 ###EXAMPLE DEMO USAGE
 
-```
+```bash
 $ mvn clean compile exec:java -q
 ```
 
