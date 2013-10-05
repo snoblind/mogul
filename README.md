@@ -17,17 +17,17 @@ for (var i = 0; i < bylines.length; i++) { var story = bylines[i].parentNode; va
 exit()
 ```
 
-U.S. Says Navy SEALs Stage Raid on Somali Militants By NICHOLAS KULISH and ERIC SCHMITT
-Al Qaeda Suspect Wanted in U.S. Said to Be Taken in Libya By DAVID D. KIRKPATRICK
-Rallies Nationwide Push Immigration Overhaul By JULIA PRESTON
-A Frustrated Alex Rodriguez Turned on the Players Union By SERGE F. KOVALESKI and STEVE EDER
-Gabriella Demczuk/The New York Times By JONATHAN WEISMAN
-Hagel Recalls Most Defense Workers By THOM SHANKER and JONATHAN WEISMAN
-Sunday Review | News Analysis By SAM TANENHAUS
-Obama Urges Patience With Health Exchanges By JACKIE CALMES
-The Building Has 1,000 Eyes By JOANNE KAUFMAN
-Deciding Who Sees Students’ Data By NATASHA SINGER
-Character Study By COREY KILGANNON
-Disunion: Maximilian in Mexico By PHIL LEIGH
+U.S. Says Navy SEALs Stage Raid on Somali Militants By NICHOLAS KULISH and ERIC SCHMITT  
+Al Qaeda Suspect Wanted in U.S. Said to Be Taken in Libya By DAVID D. KIRKPATRICK  
+Rallies Nationwide Push Immigration Overhaul By JULIA PRESTON  
+A Frustrated Alex Rodriguez Turned on the Players Union By SERGE F. KOVALESKI and STEVE EDER  
+Gabriella Demczuk/The New York Times By JONATHAN WEISMAN  
+Hagel Recalls Most Defense Workers By THOM SHANKER and JONATHAN WEISMAN  
+Sunday Review | News Analysis By SAM TANENHAUS  
+Obama Urges Patience With Health Exchanges By JACKIE CALMES  
+The Building Has 1,000 Eyes By JOANNE KAUFMAN  
+Deciding Who Sees Students’ Data By NATASHA SINGER  
+Character Study By COREY KILGANNON  
+Disunion: Maximilian in Mexico By PHIL LEIGH  
 
 __Watch this space!__
