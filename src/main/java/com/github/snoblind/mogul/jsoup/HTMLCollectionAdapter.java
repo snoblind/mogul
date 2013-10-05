@@ -1,5 +1,6 @@
 package com.github.snoblind.mogul.jsoup;
 
+import java.util.Iterator;
 import java.util.List;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -48,4 +49,14 @@ public class HTMLCollectionAdapter implements HTMLCollection, NodeList {
 		return null;
 	}
 
+	public String toString() {
+		StringBuilder builder = new StringBuilder("[");
+		for (Iterator<Node> iterator = nodes.iterator(); iterator.hasNext(); ) {
+			builder.append(iterator.next());
+			if (iterator.hasNext()) {
+				builder.append(", ");
+			}
+		}
+		return builder.append("]").toString();
+	}
 }

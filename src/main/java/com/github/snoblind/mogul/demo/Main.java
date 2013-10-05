@@ -19,14 +19,16 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.EcmaError;
+import org.mozilla.javascript.EvaluatorException;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.Undefined;
+import org.mozilla.javascript.WrappedException;
 
 public class Main {
 
 	private static final String EXIT_FUNCTION = "function exit(returnCode) { java.lang.System.exit(returnCode == null ? 0 : returnCode); }";
-	private static final String INITIAL_URL = "http://www.google.com/";
+	private static final String INITIAL_URL = "http://www.w3.org/TR/html5/";
 	
 	private static final Answer<Object> ANSWER_UNSUPPORTED_OPERATION = new Answer<Object>() {
 		public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -57,7 +59,9 @@ public class Main {
 				while ((source = jline.readLine()) != null) {
 					try {
 						Object returnValue = context.evaluateString(window, source, null, 0, null);
-						if (returnValue instanceof Undefined) {
+						if (returnValue == null) {
+						}
+						else if (returnValue instanceof Undefined) {
 						}
 						else if (returnValue instanceof NativeJavaObject) {
 							jline.println(Context.jsToJava(returnValue, String.class).toString());
@@ -69,6 +73,12 @@ public class Main {
 						}
 					}
 					catch (EcmaError x) {
+						System.err.println(x.getMessage());
+					}
+					catch (WrappedException x) {
+						System.err.println(x.getWrappedException());
+					}
+					catch (EvaluatorException x) {
 						System.err.println(x.getMessage());
 					}
 				}

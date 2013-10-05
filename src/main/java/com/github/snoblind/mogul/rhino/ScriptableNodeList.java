@@ -93,4 +93,15 @@ public class ScriptableNodeList implements NodeList, Scriptable {
 	public boolean hasInstance(Scriptable instance) {
 		throw new UnsupportedOperationException();
 	}
+
+	public String toString() {
+		StringBuilder builder = new StringBuilder("[");
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			builder.append(nodeList.item(i));
+			if (i < nodeList.getLength()) {
+				builder.append(", ");
+			}
+		}
+		return builder.append("]").toString();
+	}
 }
