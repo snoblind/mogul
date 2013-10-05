@@ -44,7 +44,8 @@ public class Main {
 		Navigator navigator = new RhinoNavigator();
 		Console console = new PrintStreamConsole();
 		try {
-			RhinoWindowEnvironment environment = new RhinoWindowEnvironment(timer, console, globalEventHandlers, windowEventHandlers);
+			RhinoWindowEnvironment environment = RhinoWindowEnvironment.builder()
+					.timer(timer).console(console).globalEventHandlers(globalEventHandlers).windowEventHandlers(windowEventHandlers).build();
 			RhinoWindow window = environment.open(INITIAL_URL, null, null, false);
 			ConsoleReader jline = new ConsoleReader();
 			try {

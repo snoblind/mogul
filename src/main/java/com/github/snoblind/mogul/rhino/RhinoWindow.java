@@ -46,7 +46,7 @@ public class RhinoWindow extends ScriptableObject implements Window {
 	private final GlobalEventHandlers globalEventHandlers;
 	private final WindowEventHandlers windowEventHandlers;
 
-	public RhinoWindow(Timer timer, Console console, GlobalEventHandlers globalEventHandlers, WindowEventHandlers windowEventHandlers, JSoupLocation location, RhinoDocument document) {
+	private RhinoWindow(Timer timer, Console console, GlobalEventHandlers globalEventHandlers, WindowEventHandlers windowEventHandlers, JSoupLocation location, RhinoDocument document) {
 		notNull(this.timer = timer);
 		notNull(this.console = console);
 		notNull(this.globalEventHandlers = globalEventHandlers);
@@ -855,5 +855,56 @@ public class RhinoWindow extends ScriptableObject implements Window {
 
 	public Window open(String url, String target, String features, boolean replace) throws IOException {
 		throw new UnsupportedOperationException();
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static class Builder {
+		
+		private Timer timer;
+		private Console console;
+		private GlobalEventHandlers globalEventHandlers;
+		private WindowEventHandlers windowEventHandlers;
+		private JSoupLocation location;
+		private RhinoDocument document;
+
+		private Builder() {
+		}
+
+		public RhinoWindow build() {
+			return new RhinoWindow(timer, console, globalEventHandlers, windowEventHandlers, location, document);
+		}
+		
+		public Builder timer(Timer timer) {
+			this.timer = timer;
+			return this;
+		}
+		
+		public Builder console(Console console) {
+			this.console = console;
+			return this;
+		}
+		
+		public Builder globalEventHandlers(GlobalEventHandlers globalEventHandlers) {
+			this.globalEventHandlers = globalEventHandlers;
+			return this;
+		}
+		
+		public Builder windowEventHandlers(WindowEventHandlers windowEventHandlers) {
+			this.windowEventHandlers = windowEventHandlers;
+			return this;
+		}
+		
+		public Builder location(JSoupLocation location) {
+			this.location = location;
+			return this;
+		}
+		
+		public Builder document(RhinoDocument document) {
+			this.document = document;
+			return this;
+		}
 	}
 }
