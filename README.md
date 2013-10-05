@@ -1,5 +1,4 @@
-mogul
-=====
+#mogul
 
 Java interfaces representing the standard JavaScript web objects (window, navigator, location, history, screen, etc.) with at least one implementation.
 
@@ -7,6 +6,9 @@ Java interfaces representing the standard JavaScript web objects (window, naviga
 
 ###EXAMPLE DEMO USAGE
 
+```javascript
+var bylines = document.querySelectorAll('h6.byline');
+```
     $ mvn clean compile exec:java -q
     location.href
     http://www.nytimes.com/
@@ -26,4 +28,4 @@ Java interfaces representing the standard JavaScript web objects (window, naviga
     Disunion: Maximilian in Mexico By PHIL LEIGH
     exit()
 
-Watch this space!
+__Watch this space!__
