@@ -24,7 +24,7 @@ exit();
 ```
 
 ####Example Output:
-> "Sunday, October 6, 2013 Last Update: 10:48 AM ET  
+> Sunday, October 6, 2013 Last Update: 10:48 AM ET  
 A Federal Budget Crisis Months in the Planning By SHERYL GAY STOLBERG and MIKE McINTIRE  
 Libyan Government Wants Explanation After U.S. Raid By DAVID D. KIRKPATRICK, NICHOLAS KULISH and ERIC SCHMITT  
 Bible College Helps Some at Louisiana Prison Find Peace By ERIK ECKHOLM  
@@ -35,4 +35,4 @@ Greeks Call for World War II Reparations By SUZANNE DALEY
 Video Feature:  Snap. Hold. Kick.   
 Marseille, the Secret Capital of France By MICHAEL KIMMELMAN  
 Opinion By ÓSCAR MARTÍNEZ  
-Editorial: The Supreme Court Returns By THE EDITORIAL BOARD  "
+Editorial: The Supreme Court Returns By THE EDITORIAL BOARD  
