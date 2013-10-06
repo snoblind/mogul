@@ -236,7 +236,7 @@ public class JSoupDocument extends JSoupNode<org.jsoup.nodes.Document> implement
 	}
 
 	public Element getElementById(String elementId) {
-		throw new UnsupportedOperationException();
+		return querySelector(String.format("#%s", elementId));
 	}
 
 	public NodeList getElementsByName(String elementName) {

@@ -13,7 +13,7 @@ $ mvn clean compile exec:java -q
 
 ```javascript
 location.href = 'http://www.nytimes.com/';
-console.log(document.querySelector("#date").innerText);
+console.log(document.getElementById('date').innerText);
 var bylines = document.querySelectorAll('h6.byline');
 for (var i = 0; i < bylines.length; i++) {
     var headline = bylines[i].parentNode.querySelector('h1,h2,h3,h4,h5,h6,h7,h8');
