@@ -8,10 +8,8 @@ import com.github.snoblind.mogul.rhino.PrintStreamConsole;
 import com.github.snoblind.mogul.rhino.RhinoNavigator;
 import com.github.snoblind.mogul.rhino.RhinoWindow;
 import com.github.snoblind.mogul.rhino.RhinoWindowEnvironment;
-import com.github.snoblind.mogul.rhino.XMLHttpRequestConstructor;
 import java.io.IOException;
 import java.util.Timer;
-import jline.console.ConsoleReader;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.mockito.Mockito;
@@ -20,9 +18,6 @@ import org.mockito.stubbing.Answer;
 import org.mozilla.javascript.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.mozilla.javascript.ScriptableObject.defineProperty;
-import static org.mozilla.javascript.ScriptableObject.DONTENUM;
-import static org.mozilla.javascript.ScriptableObject.putProperty;
 
 public class Main {
 
@@ -54,20 +49,8 @@ public class Main {
 			RhinoWindowEnvironment environment = RhinoWindowEnvironment.builder()
 					.timer(timer).console(console).globalEventHandlers(globalEventHandlers).windowEventHandlers(windowEventHandlers).build();
 			RhinoWindow window = environment.open(INITIAL_URL, null, null, false);
-			ConsoleReader jline = new ConsoleReader();
 			try {
-				Context context = Context.enter();
-				LOGGER.debug("Rhino Context entered.");
-				context.initStandardObjects(window);
-				LOGGER.debug("Standard objects initialized.");
-				putProperty(window, "console", console);
-				putProperty(window, "err", System.err);
-				putProperty(window, "navigator", navigator);
-				putProperty(window, "out", System.out);
-				putProperty(window, "window", window);
-		        defineProperty(window, "XMLHttpRequest", new XMLHttpRequestConstructor(httpClient), DONTENUM);
-				LOGGER.debug("Defined console, err, navigator, out, window, and XMLHttpRequest.");
-				new Demo(context, window, jline).call();
+				Demo.builder().console(console).httpClient(httpClient).navigator(navigator).window(window).build().call();
 			}
 			finally {
 				exitContext();

@@ -1,5 +1,7 @@
 package com.github.snoblind.mogul.rhino;
 
+import com.github.snoblind.mogul.NodeListIterator;
+import java.util.Iterator;
 import org.mozilla.javascript.Scriptable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import static org.apache.commons.lang.Validate.notNull;
 
-public class ScriptableNodeList implements NodeList, Scriptable {
+public class ScriptableNodeList implements Iterable<Node>, NodeList, Scriptable {
 
 	private static final Logger logger = LoggerFactory.getLogger(ScriptableNodeList.class);
 
@@ -29,19 +31,22 @@ public class ScriptableNodeList implements NodeList, Scriptable {
 		return getClass().getName();
 	}
 
-	public Object get(String name, Scriptable start) {
-		logger.debug("get({}, {})", name, start);
-		if ("length".equals(name)) {
-			return nodeList.getLength();
-		}
-		throw new UnsupportedOperationException(String.format("get(%s, %s)", name, start));
-	}
-
 	public Object get(int index, Scriptable start) {
 		logger.debug("get({}, {})", index, start);
 		return nodeList.item(index);
 	}
 
+	public Object get(String name, Scriptable start) {
+		logger.debug("get({}, {})", name, start.getClass().getName());
+		if ("forEach".equals(name)) {
+			return new ForEachFunction(this);
+		}
+		if ("length".equals(name)) {
+			return nodeList.getLength();
+		}
+		throw new UnsupportedOperationException(String.format("get(%s, %s)", name, start.getClass().getName()));
+	}
+	
 	public boolean has(String name, Scriptable start) {
 		throw new UnsupportedOperationException();
 	}
@@ -103,5 +108,9 @@ public class ScriptableNodeList implements NodeList, Scriptable {
 			}
 		}
 		return builder.append("]").toString();
+	}
+
+	public Iterator<Node> iterator() {
+		return new NodeListIterator(nodeList);
 	}
 }
