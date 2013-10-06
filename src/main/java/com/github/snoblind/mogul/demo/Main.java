@@ -60,11 +60,13 @@ public class Main {
 				LOGGER.debug("Rhino Context entered.");
 				context.initStandardObjects(window);
 				LOGGER.debug("Standard objects initialized.");
-		        defineProperty(window, "XMLHttpRequest", new XMLHttpRequestConstructor(httpClient), DONTENUM);
 				putProperty(window, "console", console);
+				putProperty(window, "err", System.err);
 				putProperty(window, "navigator", navigator);
+				putProperty(window, "out", System.out);
 				putProperty(window, "window", window);
-				LOGGER.debug("Defined console, navigator, window, and XMLHttpRequest.");
+		        defineProperty(window, "XMLHttpRequest", new XMLHttpRequestConstructor(httpClient), DONTENUM);
+				LOGGER.debug("Defined console, err, navigator, out, window, and XMLHttpRequest.");
 				new Demo(context, window, jline).call();
 			}
 			finally {
