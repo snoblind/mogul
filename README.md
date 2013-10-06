@@ -4,6 +4,11 @@ Java interfaces representing the standard JavaScript web objects (window, naviga
 
 [javadoc](http://snoblind.github.io/mogul/apidocs/overview-summary.html)
 
+---
+description: Java interfaces representing the standard JavaScript web objects (window, navigator, location, history, screen, etc.) with at least one implementation.
+tags: html5, java, rhino, javascript, dom
+---
+
 ###Example Demo Usage:
 
 ```bash
