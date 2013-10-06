@@ -2,7 +2,7 @@
 
 Java interfaces representing the standard HTML5/JavaScript web objects (window, navigator, location, history, screen, etc.) with at least one implementation.
 
-[javadoc](http://snoblind.github.io/mogul/apidocs/overview-summary.html)
+[javadoc](http://snoblind.github.io/mogul)
 
 
 ###Example Demo Usage:
