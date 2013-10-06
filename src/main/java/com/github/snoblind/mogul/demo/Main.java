@@ -18,16 +18,16 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.mozilla.javascript.Context;
-import org.mozilla.javascript.EcmaError;
-import org.mozilla.javascript.EvaluatorException;
-import org.mozilla.javascript.NativeJavaObject;
-import org.mozilla.javascript.ScriptableObject;
-import org.mozilla.javascript.Undefined;
-import org.mozilla.javascript.WrappedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import static org.mozilla.javascript.ScriptableObject.defineProperty;
+import static org.mozilla.javascript.ScriptableObject.DONTENUM;
+import static org.mozilla.javascript.ScriptableObject.putProperty;
 
 public class Main {
 
-	private static final String EXIT_FUNCTION = "function exit(returnCode) { java.lang.System.exit(returnCode == null ? 0 : returnCode); }";
+	private static Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
 	private static final String INITIAL_URL = "http://www.nytimes.com/";
 	
 	private static final Answer<Object> ANSWER_UNSUPPORTED_OPERATION = new Answer<Object>() {
@@ -35,14 +35,21 @@ public class Main {
 			throw new UnsupportedOperationException(invocation.getMethod().toString());
 		}
 	};
-
+	
 	public static void main(String[] args) throws IOException {
-		Timer timer = new Timer();
-		HttpClient httpClient = new DefaultHttpClient();
-		GlobalEventHandlers globalEventHandlers = Mockito.mock(GlobalEventHandlers.class, ANSWER_UNSUPPORTED_OPERATION);
-		WindowEventHandlers windowEventHandlers = Mockito.mock(WindowEventHandlers.class, ANSWER_UNSUPPORTED_OPERATION);
-		Navigator navigator = new RhinoNavigator();
-		Console console = new PrintStreamConsole();
+		final Timer timer = new Timer();
+		final HttpClient httpClient = new DefaultHttpClient();
+		final GlobalEventHandlers globalEventHandlers = Mockito.mock(GlobalEventHandlers.class, ANSWER_UNSUPPORTED_OPERATION);
+		final WindowEventHandlers windowEventHandlers = Mockito.mock(WindowEventHandlers.class, ANSWER_UNSUPPORTED_OPERATION);
+		final Navigator navigator = new RhinoNavigator();
+		final Console console = new PrintStreamConsole();
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				exitContext();
+				shutdown(httpClient);
+				cancel(timer);
+			}
+		});
 		try {
 			RhinoWindowEnvironment environment = RhinoWindowEnvironment.builder()
 					.timer(timer).console(console).globalEventHandlers(globalEventHandlers).windowEventHandlers(windowEventHandlers).build();
@@ -50,56 +57,63 @@ public class Main {
 			ConsoleReader jline = new ConsoleReader();
 			try {
 				Context context = Context.enter();
+				LOGGER.debug("Rhino Context entered.");
 				context.initStandardObjects(window);
-		        ScriptableObject.defineProperty(window, "XMLHttpRequest", new XMLHttpRequestConstructor(httpClient), ScriptableObject.DONTENUM);
-				ScriptableObject.putProperty(window, "console", console);
-				ScriptableObject.putProperty(window, "navigator", navigator);
-				ScriptableObject.putProperty(window, "window", window);
-				context.evaluateString(window, EXIT_FUNCTION, null, 0, null);
-				String source;
-				while ((source = jline.readLine()) != null) {
-					try {
-						Object returnValue = context.evaluateString(window, source, null, 0, null);
-						if (returnValue == null) {
-						}
-						else if (returnValue instanceof Undefined) {
-						}
-						else if (returnValue instanceof NativeJavaObject) {
-							jline.println(Context.jsToJava(returnValue, String.class).toString());
-							jline.flush();
-						}
-						else {
-							jline.println(returnValue.toString());
-							jline.flush();
-						}
-					}
-					catch (EcmaError x) {
-						System.err.println(x.getMessage());
-					}
-					catch (WrappedException x) {
-						System.err.println(x.getWrappedException());
-					}
-					catch (EvaluatorException x) {
-						System.err.println(x.getMessage());
-					}
-				}
+				LOGGER.debug("Standard objects initialized.");
+		        defineProperty(window, "XMLHttpRequest", new XMLHttpRequestConstructor(httpClient), DONTENUM);
+				putProperty(window, "console", console);
+				putProperty(window, "navigator", navigator);
+				putProperty(window, "window", window);
+				LOGGER.debug("Defined console, navigator, window, and XMLHttpRequest.");
+				new Demo(context, window, jline).call();
 			}
 			finally {
-				System.out.print("Exiting Rhino context ...");
-				Context.exit();
-				System.out.println(" done.");
+				exitContext();
 			}
 		}
 		catch (Throwable x) {
 			x.printStackTrace();
 		}
 		finally {
-			System.out.print("Shutting down HTTP connection manager ...");
+			shutdown(httpClient);
+			cancel(timer);
+		}
+	}
+
+	private static void exitContext() {
+		if (Context.getCurrentContext() == null) {
+			LOGGER.debug("No current Rhino context. Doing nothing.");
+			return;
+		}
+		try {
+			LOGGER.debug("Exiting Rhino context.");
+			Context.exit();
+			LOGGER.debug("Exited Rhino context.");
+		}
+		catch (Exception x) {
+			x.printStackTrace();
+		}
+	}
+
+	private static void shutdown(HttpClient httpClient) {
+		try {
+			LOGGER.debug("Shutting down HTTP connection manager.");
 			httpClient.getConnectionManager().shutdown();
-			System.out.println(" done.");
-			System.out.print("Cancelling timer ...");
+			LOGGER.debug("Shutdown of HTTP connection manager completed without incident.");
+		}
+		catch (Exception x) {
+			x.printStackTrace();
+		}
+	}
+
+	private static void cancel(Timer timer) {
+		try {
+			LOGGER.debug("Cancelling timer.");
 			timer.cancel();
-			System.out.println(" done.");
+			LOGGER.debug("Cancelled timer.");
+		}
+		catch (Exception x) {
+			x.printStackTrace();
 		}
 	}
 }

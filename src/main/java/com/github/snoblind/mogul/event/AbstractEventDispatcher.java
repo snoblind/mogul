@@ -1,13 +1,5 @@
 package com.github.snoblind.mogul.event;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Collections;
-import java.util.Collection;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.github.snoblind.mogul.Event;
 import com.github.snoblind.mogul.EventException;
 import com.github.snoblind.mogul.EventListener;
@@ -15,13 +7,19 @@ import com.github.snoblind.mogul.EventTarget;
 import com.github.snoblind.mogul.ExtendedHTMLDocument;
 import com.github.snoblind.mogul.ExtendedHTMLElement;
 import com.github.snoblind.mogul.Window;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import static com.github.snoblind.mogul.Event.AT_TARGET;
 import static com.github.snoblind.mogul.Event.BUBBLING_PHASE;
 import static com.github.snoblind.mogul.Event.CAPTURING_PHASE;
+import static java.lang.String.format;
 import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
-import static java.lang.String.format;
 
 public abstract class AbstractEventDispatcher implements EventDispatcher {
 	

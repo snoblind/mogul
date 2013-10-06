@@ -1,13 +1,9 @@
 #mogul
 
-Java interfaces representing the standard JavaScript web objects (window, navigator, location, history, screen, etc.) with at least one implementation.
+Java interfaces representing the standard HTML5/JavaScript web objects (window, navigator, location, history, screen, etc.) with at least one implementation.
 
 [javadoc](http://snoblind.github.io/mogul/apidocs/overview-summary.html)
 
----
-description: Java interfaces representing the standard JavaScript web objects (window, navigator, location, history, screen, etc.) with at least one implementation.
-tags: html5, java, rhino, javascript, dom
----
 
 ###Example Demo Usage:
 
@@ -17,23 +13,26 @@ $ mvn clean compile exec:java -q
 
 ```javascript
 location.href = 'http://www.nytimes.com/';
+console.log(document.querySelector("#date").innerText);
 var bylines = document.querySelectorAll('h6.byline');
-for (var i = 0; i < bylines.length; i++) { var story = bylines[i].parentNode; var headline = story.querySelector('h1,h2,h3,h4,h5,h6,h7,h8'); console.log(headline.innerText.trim() + ' ' + bylines[i].innerText.trim()); }
-exit()
+for (var i = 0; i < bylines.length; i++) {
+    var headline = bylines[i].parentNode.querySelector('h1,h2,h3,h4,h5,h6,h7,h8');
+    console.log(headline.innerText.trim() + ' ' + bylines[i].innerText.trim());
+}
+exit();
+.
 ```
 
-####Output:
-U.S. Says Navy SEALs Stage Raid on Somali Militants By NICHOLAS KULISH and ERIC SCHMITT  
-Al Qaeda Suspect Wanted in U.S. Said to Be Taken in Libya By DAVID D. KIRKPATRICK  
-Rallies Nationwide Push Immigration Overhaul By JULIA PRESTON  
-A Frustrated Alex Rodriguez Turned on the Players Union By SERGE F. KOVALESKI and STEVE EDER  
-Gabriella Demczuk/The New York Times By JONATHAN WEISMAN  
-Hagel Recalls Most Defense Workers By THOM SHANKER and JONATHAN WEISMAN  
-Sunday Review | News Analysis By SAM TANENHAUS  
-Obama Urges Patience With Health Exchanges By JACKIE CALMES  
-The Building Has 1,000 Eyes By JOANNE KAUFMAN  
-Deciding Who Sees Students’ Data By NATASHA SINGER  
-Character Study By COREY KILGANNON  
-Disunion: Maximilian in Mexico By PHIL LEIGH  
-
-__Watch this space!__
+####Example Output:
+Sunday, October 6, 2013 Last Update: 10:48 AM ET  
+A Federal Budget Crisis Months in the Planning By SHERYL GAY STOLBERG and MIKE McINTIRE  
+Libyan Government Wants Explanation After U.S. Raid By DAVID D. KIRKPATRICK, NICHOLAS KULISH and ERIC SCHMITT  
+Bible College Helps Some at Louisiana Prison Find Peace By ERIK ECKHOLM  
+Brian Blanco for The New York Times By DAVID SEGAL  
+Karzai to Be There for Successor. Right There. By MATTHEW ROSENBERG  
+Selling Secrets of Smartphone Users to Advertisers By CLAIRE CAIN MILLER and SOMINI SENGUPTA  
+Greeks Call for World War II Reparations By SUZANNE DALEY  
+Video Feature:  Snap. Hold. Kick.   
+Marseille, the Secret Capital of France By MICHAEL KIMMELMAN  
+Opinion By ÓSCAR MARTÍNEZ  
+Editorial: The Supreme Court Returns By THE EDITORIAL BOARD  
