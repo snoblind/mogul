@@ -36,3 +36,6 @@ Video Feature:  Snap. Hold. Kick.
 Marseille, the Secret Capital of France By MICHAEL KIMMELMAN  
 Opinion By ÓSCAR MARTÍNEZ  
 Editorial: The Supreme Court Returns By THE EDITORIAL BOARD  
+
+###Contact:
+I'm interested in any and all feedback. [Send me an email](mailto:mattmannnyc@gmail.com).
