@@ -4,10 +4,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 import org.junit.Test;
 import org.mockito.Mock;
-
 import com.github.snoblind.mogul.jsoup.JSoupDocument;
 import com.github.snoblind.mogul.jsoup.JSoupParagraphElement;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
