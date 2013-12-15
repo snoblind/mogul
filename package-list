@@ -3,3 +3,4 @@ com.github.snoblind.mogul.demo
 com.github.snoblind.mogul.event
 com.github.snoblind.mogul.jsoup
 com.github.snoblind.mogul.rhino
+com.github.snoblind.mogul.spi
