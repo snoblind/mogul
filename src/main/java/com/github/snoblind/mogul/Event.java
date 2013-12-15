@@ -15,6 +15,7 @@ public interface Event {
 	boolean isDefaultPrevented();
 	boolean isTrusted();
 	EventTarget getTarget();
+	void setTarget(EventTarget target);
 	EventTarget getCurrentTarget();
 	int getEventPhase();
 	long getTimeStamp();

@@ -2,8 +2,10 @@ package com.github.snoblind.mogul.event;
 
 import com.github.snoblind.mogul.Event;
 import com.github.snoblind.mogul.EventTarget;
+import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang.builder.ToStringStyle.MULTI_LINE_STYLE;
 
-public abstract class AbstractEvent implements Event {
+public class EventImpl implements Event {
 
 	public void initEvent(String eventType, boolean canBubble, boolean cancelableArg) {
 		setType(eventType);
@@ -51,6 +53,10 @@ public abstract class AbstractEvent implements Event {
 
 	public EventTarget getTarget() {
 		return target;
+	}
+
+	public void setTarget(EventTarget target) {
+		this.target = target;
 	}
 
 	private EventTarget currentTarget;
@@ -103,5 +109,9 @@ public abstract class AbstractEvent implements Event {
 
 	public void stopPropagation() {
 		throw new UnsupportedOperationException();
+	}
+
+	public String toString() {
+		return reflectionToString(this, MULTI_LINE_STYLE);
 	}
 }

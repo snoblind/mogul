@@ -40,11 +40,11 @@ public abstract class AbstractEventDispatcher implements EventDispatcher {
 	public boolean dispatchEvent(Event event) throws EventException {
 		notNull(event.getTarget());
 		Collection<EventTarget> propagationPath = getPropagationPath(event);
-		if (propagate((AbstractEvent)event, CAPTURING_PHASE, propagationPath)) {
-			if (doTargetPhase((AbstractEvent)event)) {
+		if (propagate((EventImpl)event, CAPTURING_PHASE, propagationPath)) {
+			if (doTargetPhase((EventImpl)event)) {
 				List<EventTarget> reverseProparationPath = new ArrayList<EventTarget>(propagationPath);
 				Collections.reverse(reverseProparationPath);
-				propagate((AbstractEvent)event, BUBBLING_PHASE, reverseProparationPath);
+				propagate((EventImpl)event, BUBBLING_PHASE, reverseProparationPath);
 			}
 		}
 		return event.isDefaultPrevented();
@@ -90,7 +90,7 @@ public abstract class AbstractEventDispatcher implements EventDispatcher {
 		return true;
 	}
 
-	protected boolean propagate(AbstractEvent event, int phase, Collection<EventTarget> targets) throws EventException {
+	protected boolean propagate(EventImpl event, int phase, Collection<EventTarget> targets) throws EventException {
 		isTrue(phase == CAPTURING_PHASE || phase == BUBBLING_PHASE);
 		for (EventTarget currentTarget: targets) {
 			if (event.getTarget().equals(currentTarget)) {
@@ -106,7 +106,7 @@ public abstract class AbstractEventDispatcher implements EventDispatcher {
 		return true;
 	}
 	
-	protected boolean doTargetPhase(AbstractEvent event) throws EventException {
+	protected boolean doTargetPhase(EventImpl event) throws EventException {
 		event.setEventPhase(AT_TARGET);
 		event.setCurrentTarget(event.getTarget());
 		Collection<EventListener> listeners = getEventListeners(event);

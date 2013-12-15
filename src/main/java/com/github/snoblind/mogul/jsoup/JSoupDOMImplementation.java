@@ -1,7 +1,7 @@
 package com.github.snoblind.mogul.jsoup;
 
 import com.github.snoblind.mogul.event.EventDispatcher;
-
+import com.github.snoblind.mogul.event.MapEventDispatcher;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -19,7 +19,7 @@ public class JSoupDOMImplementation implements DOMImplementation {
 
 	public Document createDocument(String namespaceURI, String qualifiedName, DocumentType doctype) throws DOMException {
 		org.jsoup.nodes.Document document = new org.jsoup.nodes.Document(namespaceURI.toString());
-		EventDispatcher eventDispatcher = new JSoupEventDispatcher();
+		EventDispatcher eventDispatcher = new MapEventDispatcher();
 		return new JSoupDocument(document, eventDispatcher);
 	}
 

@@ -4,7 +4,7 @@ import com.github.snoblind.mogul.GlobalEventHandlers;
 import com.github.snoblind.mogul.WindowEnvironment;
 import com.github.snoblind.mogul.WindowEventHandlers;
 import com.github.snoblind.mogul.event.EventDispatcher;
-import com.github.snoblind.mogul.jsoup.JSoupEventDispatcher;
+import com.github.snoblind.mogul.event.MapEventDispatcher;
 import com.github.snoblind.mogul.jsoup.JSoupLocation;
 import java.io.IOException;
 import java.util.Timer;
@@ -32,7 +32,7 @@ public class RhinoWindowEnvironment implements WindowEnvironment {
 		isTrue(target == null && features == null && replace == false);
 		final Connection connection = Jsoup.connect(url.toString());
 		final JSoupLocation location = new JSoupLocation(connection);
-		final EventDispatcher eventDispatcher = new JSoupEventDispatcher();
+		final EventDispatcher eventDispatcher = new MapEventDispatcher();
 		final RhinoDocument document = new RhinoDocument(connection.get(), eventDispatcher);
 		final RhinoWindow window  = RhinoWindow.builder()
 				.timer(timer).console(console).globalEventHandlers(globalEventHandlers)

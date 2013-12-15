@@ -1,35 +1,39 @@
-package com.github.snoblind.mogul.jsoup;
+package com.github.snoblind.mogul.event;
 
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
-
 import com.github.snoblind.mogul.Event;
 import com.github.snoblind.mogul.EventListener;
 import com.github.snoblind.mogul.EventTarget;
-import com.github.snoblind.mogul.event.AbstractEventDispatcher;
-
 import static org.apache.commons.lang.Validate.notNull;
 import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang.builder.HashCodeBuilder.reflectionHashCode;
 import static java.lang.String.format;
 
-public class JSoupEventDispatcher extends AbstractEventDispatcher {
+public class MapEventDispatcher extends AbstractEventDispatcher {
 	
-	private Map<Key, Collection<EventListener>> map = new HashMap<Key, Collection<EventListener>>();
+	private final Map<Key, Collection<EventListener>> map;
 
+	public MapEventDispatcher(final Map<Key, Collection<EventListener>> map) {
+		notNull(map);
+		this.map = map;
+	}
+
+	public MapEventDispatcher() {
+		this(new HashMap<Key, Collection<EventListener>>());
+	}
+	
 	public Event createEvent(String eventInterface) {
 		if ("Event".equals(eventInterface)) {
-			return new JSoupEvent();
+			return new EventImpl();
 		}
 		throw new IllegalArgumentException(String.valueOf(eventInterface));
 	}
 
 	public void addEventListener(EventTarget target, String type, EventListener listener, boolean useCapture) {
-//		isTrue(target instanceof JSoupNode);
-//		Key key = new Key(((JSoupNode<?>)target).node, type, useCapture);
 		Key key = new Key(target, type, useCapture);
 		Collection<EventListener> listeners = map.get(key);
 		if (listeners == null) {
@@ -61,12 +65,11 @@ public class JSoupEventDispatcher extends AbstractEventDispatcher {
 		return listeners;
 	}
 
-	@SuppressWarnings("unused")
 	private static class Key {
 
-		private final EventTarget target;
-		private final String type;
-		private final boolean useCapture;
+		@SuppressWarnings("unused") private final EventTarget target;
+		@SuppressWarnings("unused") private final String type;
+		@SuppressWarnings("unused") private final boolean useCapture;
 
 		private Key(EventTarget target, String type, boolean useCapture) {
 			notNull(this.target = target);

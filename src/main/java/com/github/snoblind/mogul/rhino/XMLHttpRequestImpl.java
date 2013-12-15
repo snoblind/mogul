@@ -1,7 +1,7 @@
 package com.github.snoblind.mogul.rhino;
 
 import com.github.snoblind.mogul.EventListener;
-import com.github.snoblind.mogul.event.AbstractEvent;
+import com.github.snoblind.mogul.event.EventImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -104,7 +104,7 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 
 	private void fireReadyStateChanged() {
 		if (onreadystatechange != null) {
-			onreadystatechange.handleEvent(new AbstractEvent() {});
+			onreadystatechange.handleEvent(new EventImpl() {});
 		}
 	}
 

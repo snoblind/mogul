@@ -5,6 +5,7 @@ import com.github.snoblind.mogul.EventException;
 import com.github.snoblind.mogul.EventListener;
 import com.github.snoblind.mogul.ExtendedHTMLDocument;
 import com.github.snoblind.mogul.ExtendedHTMLElement;
+import com.github.snoblind.mogul.HTMLCollectionAdapter;
 import com.github.snoblind.mogul.Window;
 import com.github.snoblind.mogul.event.EventDispatcher;
 import org.jsoup.nodes.Document;
@@ -25,7 +26,6 @@ import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 import org.w3c.dom.html.HTMLCollection;
 import org.w3c.dom.html.HTMLTitleElement;
-
 import static org.apache.commons.lang.Validate.notNull;
 
 public class JSoupDocument extends JSoupNode<org.jsoup.nodes.Document> implements ExtendedHTMLDocument {

@@ -1,4 +1,4 @@
-package com.github.snoblind.mogul.jsoup;
+package com.github.snoblind.mogul;
 
 import java.util.Iterator;
 import java.util.List;

@@ -8,9 +8,8 @@ import com.github.snoblind.mogul.ExtendedHTMLDocument;
 import com.github.snoblind.mogul.HTMLDocumentTest;
 import com.github.snoblind.mogul.Location;
 import com.github.snoblind.mogul.Window;
+import com.github.snoblind.mogul.event.MapEventDispatcher;
 import com.github.snoblind.mogul.jsoup.JSoupDocument;
-import com.github.snoblind.mogul.jsoup.JSoupEventDispatcher;
-
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -27,7 +26,7 @@ public class JSoupDocumentTest extends HTMLDocumentTest {
 	}
 
 	protected ExtendedHTMLDocument parseDocument(String html, String baseURI) throws IOException {
-		JSoupDocument document = new JSoupDocument(Parser.htmlParser().parseInput(html, baseURI), new JSoupEventDispatcher());
+		JSoupDocument document = new JSoupDocument(Parser.htmlParser().parseInput(html, baseURI), new MapEventDispatcher());
 		document.setDefaultView(window);
 		return document;
 	}

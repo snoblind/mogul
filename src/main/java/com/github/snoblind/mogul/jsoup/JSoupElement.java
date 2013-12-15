@@ -5,7 +5,6 @@ import com.github.snoblind.mogul.EventException;
 import com.github.snoblind.mogul.EventListener;
 import com.github.snoblind.mogul.ExtendedHTMLElement;
 import com.github.snoblind.mogul.OnErrorEventHandler;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Attr;
@@ -15,7 +14,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.TypeInfo;
 import org.w3c.dom.html.HTMLCollection;
-import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 
 public class JSoupElement extends JSoupNode<Element> implements ExtendedHTMLElement {
@@ -210,11 +208,6 @@ public class JSoupElement extends JSoupNode<Element> implements ExtendedHTMLElem
 	}
 
 	public boolean dispatchEvent(Event event) throws EventException {
-		isTrue(event instanceof JSoupEvent);
-		return dispatchEvent((JSoupEvent)event);
-	}
-	
-	protected boolean dispatchEvent(JSoupEvent event) throws EventException {
 		event.setTarget(this);
 		return ownerDocument.eventDispatcher.dispatchEvent(event);
 	}

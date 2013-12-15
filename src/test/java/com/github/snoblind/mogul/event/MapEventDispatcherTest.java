@@ -1,27 +1,24 @@
-package com.github.snoblind.mogul.jsoup;
-
+package com.github.snoblind.mogul.event;
 
 import org.mockito.Mockito;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.github.snoblind.mogul.Event;
 import com.github.snoblind.mogul.EventListener;
 import com.github.snoblind.mogul.ExtendedHTMLElement;
-import com.github.snoblind.mogul.jsoup.JSoupEvent;
-import com.github.snoblind.mogul.jsoup.JSoupEventDispatcher;
-
+import com.github.snoblind.mogul.event.EventImpl;
+import com.github.snoblind.mogul.event.MapEventDispatcher;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class JSoupEventDispatcherTest {
+public class MapEventDispatcherTest {
 	
-	private JSoupEventDispatcher eventDispatcher;
+	private MapEventDispatcher eventDispatcher;
 
 	@Before
 	public void setUp() {
-		eventDispatcher = new JSoupEventDispatcher();
+		eventDispatcher = new MapEventDispatcher();
 	}
 	
 	@After
@@ -37,7 +34,7 @@ public class JSoupEventDispatcherTest {
 		final boolean useCapture = false;
 		eventDispatcher.addEventListener(target, "click", listener, useCapture);
 		assertEquals(1, eventDispatcher.getEventListeners(target, type, useCapture).size());
-		JSoupEvent event = (JSoupEvent)eventDispatcher.createEvent("Event");
+		EventImpl event = (EventImpl)eventDispatcher.createEvent("Event");
 		event.initEvent(type, true, true);
 		event.setTarget(target);
 		eventDispatcher.dispatchEvent(event);

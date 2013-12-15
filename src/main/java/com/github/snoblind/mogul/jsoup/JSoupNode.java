@@ -1,11 +1,10 @@
 package com.github.snoblind.mogul.jsoup;
 
 import com.github.snoblind.mogul.ExtendedHTMLElement;
-
+import com.github.snoblind.mogul.HTMLCollectionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jsoup.select.NodeVisitor;
@@ -15,7 +14,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.UserDataHandler;
-
 import static org.apache.commons.lang.Validate.notNull;
 
 public abstract class JSoupNode<T extends org.jsoup.nodes.Node> implements Node {

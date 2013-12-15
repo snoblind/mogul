@@ -12,11 +12,10 @@ import com.github.snoblind.mogul.ExtendedHTMLFormElement;
 import com.github.snoblind.mogul.GlobalEventHandlers;
 import com.github.snoblind.mogul.HTMLFormElementTest;
 import com.github.snoblind.mogul.WindowEventHandlers;
+import com.github.snoblind.mogul.event.MapEventDispatcher;
 import com.github.snoblind.mogul.jsoup.JSoupDocument;
-import com.github.snoblind.mogul.jsoup.JSoupEventDispatcher;
 import com.github.snoblind.mogul.jsoup.JSoupLocation;
 import com.github.snoblind.mogul.jsoup.JSoupWindow;
-
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.jsoup.Connection.Request;
@@ -50,7 +49,7 @@ public class JSoupFormElementTest extends HTMLFormElementTest {
 		doReturn(response).when(connection).execute();
 		doReturn(jsoupDocument).when(response).parse();
 		JSoupLocation location = new JSoupLocation(connection);
-		JSoupDocument document = new JSoupDocument(jsoupDocument, new JSoupEventDispatcher());
+		JSoupDocument document = new JSoupDocument(jsoupDocument, new MapEventDispatcher());
 		JSoupWindow window = new JSoupWindow(globalEventHandlers, windowEventHandlers, location, document);
 		ExtendedHTMLFormElement form = (ExtendedHTMLFormElement)document.querySelector("form");
 		assertNotNull(form);
