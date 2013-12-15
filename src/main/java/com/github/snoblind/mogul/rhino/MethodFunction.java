@@ -5,22 +5,18 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.WrappedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static com.github.snoblind.mogul.rhino.ReflectionUtils.findMethod;
 import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 
 public class MethodFunction extends AbstractFunction {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodFunction.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MethodFunction.class);
 
 	private final Object object;
 
@@ -45,18 +41,12 @@ public class MethodFunction extends AbstractFunction {
 		}
 	}
 
-	private static final Log LOG = LogFactory.getLog(MethodFunction.class);
-
-	protected Log getLog() {
-		return LOG;
-	}
-
 	public Method getMethod() {
 		return method;
 	}
 
 	public Object get(String name, Scriptable start) {
-		logger.debug("get({}, {})", name, start);
+		LOGGER.debug("get({}, {})", name, start);
 		isTrue(start == this);
 		if ("call".equals(name)) {
 			return new CallMethodFunction(this);
@@ -67,7 +57,7 @@ public class MethodFunction extends AbstractFunction {
 	protected Object coerce(Object arg, Class<?> type) {
 		notNull(arg);
 		notNull(type);
-		logger.debug("coerce({}({}), {})", arg.getClass().getName(), arg, type.getName());
+		LOGGER.debug("coerce({}({}), {})", arg.getClass().getName(), arg, type.getName());
 		if (type.isAssignableFrom(arg.getClass())) {
 			return arg;
 		}
@@ -98,7 +88,7 @@ public class MethodFunction extends AbstractFunction {
 
 	public Object call(Context context, Scriptable scope, Scriptable thisObject, Object[] args) {
 		final Class<?>[] parameterTypes = method.getParameterTypes();
-		logger.debug("call({}, {}, {}, {})", context, scope, thisObject, Arrays.toString(args));
+		LOGGER.debug("call({}, {}, {}, {})", context, scope, thisObject, Arrays.toString(args));
 //		isTrue(thisObject == object);
 		notNull(args);
 		isTrue(args.length <= parameterTypes.length);
@@ -123,7 +113,7 @@ public class MethodFunction extends AbstractFunction {
 			if (coerce(args, parameterTypes)) {
 				return call(context, scope, thisObject, args);
 			}
-			if (getLog().isErrorEnabled()) {
+			if (LOGGER.isErrorEnabled()) {
 				StringBuilder builder = new StringBuilder();
 				builder.append("Arguments ");
 				for (int i = 0; i < args.length; i++) {
@@ -133,7 +123,7 @@ public class MethodFunction extends AbstractFunction {
 					}
 				}
 				builder.append(" do not match method ").append(method);
-				getLog().error(builder.toString(), x);
+				LOGGER.error(builder.toString(), x);
 			}
 			throw new WrappedException(x);
 		}

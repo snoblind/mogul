@@ -2,20 +2,17 @@ package com.github.snoblind.mogul.rhino;
 
 import java.util.Arrays;
 import java.util.TimerTask;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 
 public class SetTimeoutFunction extends AbstractFunction {
 
-	private static final Logger logger = LoggerFactory.getLogger(SetTimeoutFunction.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SetTimeoutFunction.class);
 
 	private final RhinoWindow window;
 
@@ -24,14 +21,8 @@ public class SetTimeoutFunction extends AbstractFunction {
 		this.window = window;
 	}
 
-	private static final Log LOG = LogFactory.getLog(SetTimeoutFunction.class);
-
-	protected Log getLog() {
-		return LOG;
-	}
-
 	public Object call(Context context, final Scriptable scope, Scriptable thisObject, Object[] args) {
-		logger.debug("call({}, {}, {}, {})", context, scope, thisObject, Arrays.toString(args));
+		LOGGER.debug("call({}, {}, {}, {})", context, scope, thisObject, Arrays.toString(args));
 		isTrue(thisObject == window);
 		isTrue(0 < args.length && args.length <= 2);
 		final Number delay = args.length == 1 ? 0 : (Number)args[1];

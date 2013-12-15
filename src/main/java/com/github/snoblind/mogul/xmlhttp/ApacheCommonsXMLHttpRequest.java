@@ -5,6 +5,9 @@ import com.github.snoblind.mogul.EventListener;
 import com.github.snoblind.mogul.XMLHttpRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -15,18 +18,26 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import static org.apache.commons.lang.Validate.notNull;
 
-public class XMLHttpRequestImpl implements XMLHttpRequest {
+public class ApacheCommonsXMLHttpRequest implements XMLHttpRequest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(XMLHttpRequestImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApacheCommonsXMLHttpRequest.class);
 
 	private final HttpClient client;
 	private final Factory<? extends Event> eventFactory;
+	private final DocumentBuilderFactory documentBuilderFactory;
 
-	public XMLHttpRequestImpl(final HttpClient client, final Factory<? extends Event> eventFactory) {
+	public ApacheCommonsXMLHttpRequest(final HttpClient client, final Factory<? extends Event> eventFactory, final DocumentBuilderFactory documentBuilderFactory) {
 		notNull(this.client = client);
 		notNull(this.eventFactory = eventFactory);
+		notNull(this.documentBuilderFactory = documentBuilderFactory);
+	}
+
+	public ApacheCommonsXMLHttpRequest(final HttpClient client, final Factory<? extends Event> eventFactory) {
+		this(client, eventFactory, DocumentBuilderFactory.newInstance());
 	}
 
 	@SuppressWarnings("unused") private String username;
@@ -36,6 +47,7 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 	private String url;
 	private boolean asynchronous;
 	private String responseText;
+	private Document responseXML;
 	private int readyState = 0;
 	private HttpUriRequest request;
 	private HttpResponse response;
@@ -72,7 +84,7 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 					get();
 				}
 				catch (IOException x) {
-					throw new RuntimeException(x);
+					LOGGER.error("I/O exception when executing asynchronously.", x);
 				}
 			}
 		});
@@ -89,6 +101,17 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 		InputStream istream = null;
 		try {
 			responseText = IOUtils.toString(istream = entity.getContent());
+			try {
+				responseXML = documentBuilderFactory.newDocumentBuilder().parse(new InputSource(new StringReader(responseText)));
+			}
+			catch (ParserConfigurationException x) {
+				LOGGER.error("XML parsing error", x);
+				responseXML = null;
+			}
+			catch (SAXException x) {
+				LOGGER.error("XML parsing error", x);
+				responseXML = null;
+			}
 			setReadyState(4);
 		}
 		finally {
@@ -96,6 +119,7 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 		}
 	}
 
+	
 	public int getReadyState() {
 		return readyState;
 	}
@@ -123,7 +147,7 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 	}
 
 	public Document getResponseXML() {
-		throw new UnsupportedOperationException();
+		return responseXML;
 	}
 
 	public EventListener getOnreadystatechange() {

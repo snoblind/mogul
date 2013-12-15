@@ -5,9 +5,9 @@ import com.github.snoblind.mogul.HTMLCollectionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jsoup.select.NodeVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
@@ -18,7 +18,7 @@ import static org.apache.commons.lang.Validate.notNull;
 
 public abstract class JSoupNode<T extends org.jsoup.nodes.Node> implements Node {
 	
-	protected static final Log LOG = LogFactory.getLog(JSoupNode.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(JSoupNode.class);
 
 	protected final T node;
 	
