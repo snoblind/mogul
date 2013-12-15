@@ -1,15 +1,14 @@
 package com.github.snoblind.mogul.rhino;
 
 import static org.apache.commons.lang.Validate.notNull;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.github.snoblind.mogul.Event;
 import com.github.snoblind.mogul.EventListener;
+import com.github.snoblind.mogul.XMLHttpRequest;
 
 public class XMLHttpRequestAdapter implements Scriptable {
 	

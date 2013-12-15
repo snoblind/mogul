@@ -1,5 +1,8 @@
 package com.github.snoblind.mogul.rhino;
 
+import com.github.snoblind.mogul.Event;
+import com.github.snoblind.mogul.xmlhttp.XMLHttpRequestImpl;
+import org.apache.commons.collections4.Factory;
 import org.apache.http.client.HttpClient;
 import org.mozilla.javascript.BaseFunction;
 import org.mozilla.javascript.Context;
@@ -15,14 +18,16 @@ public class XMLHttpRequestConstructor extends BaseFunction {
 	private static final Logger LOGGER = LoggerFactory.getLogger(XMLHttpRequestConstructor.class);
 
 	private final HttpClient client;
+	private final Factory<? extends Event> eventFactory;
+	
 
-	public XMLHttpRequestConstructor(HttpClient client) {
+	public XMLHttpRequestConstructor(final HttpClient client, final Factory<? extends Event> eventFactory) {
 		notNull(this.client = client);
+		notNull(this.eventFactory = eventFactory);
 	}
 
 	public Scriptable construct(final Context context, final Scriptable scope, Object[] args) {
 		LOGGER.debug("construct({}, {}, {})", context, scope, args);
-		return new XMLHttpRequestAdapter(context, scope, new XMLHttpRequestImpl(client));
+		return new XMLHttpRequestAdapter(context, scope, new XMLHttpRequestImpl(client, eventFactory));
 	}
-
 }

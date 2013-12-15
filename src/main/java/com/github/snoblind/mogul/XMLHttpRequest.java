@@ -1,6 +1,4 @@
-package com.github.snoblind.mogul.rhino;
-
-import com.github.snoblind.mogul.EventListener;
+package com.github.snoblind.mogul;
 
 import java.io.IOException;
 import org.w3c.dom.Document;

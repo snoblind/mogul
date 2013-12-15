@@ -1,10 +1,11 @@
-package com.github.snoblind.mogul.rhino;
+package com.github.snoblind.mogul.xmlhttp;
 
+import com.github.snoblind.mogul.Event;
 import com.github.snoblind.mogul.EventListener;
-import com.github.snoblind.mogul.event.EventImpl;
-
+import com.github.snoblind.mogul.XMLHttpRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import org.apache.commons.collections4.Factory;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,22 +17,24 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import static org.apache.commons.lang.Validate.notNull;
 
-@SuppressWarnings("unused")
 public class XMLHttpRequestImpl implements XMLHttpRequest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(XMLHttpRequestImpl.class);
 
 	private final HttpClient client;
+	private final Factory<? extends Event> eventFactory;
 
-	public XMLHttpRequestImpl(HttpClient client) {
+	public XMLHttpRequestImpl(final HttpClient client, final Factory<? extends Event> eventFactory) {
 		notNull(this.client = client);
+		notNull(this.eventFactory = eventFactory);
 	}
+
+	@SuppressWarnings("unused") private String username;
+	@SuppressWarnings("unused") private String password;
 
 	private String method;
 	private String url;
 	private boolean asynchronous;
-	private String username;
-	private String password;
 	private String responseText;
 	private int readyState = 0;
 	private HttpUriRequest request;
@@ -104,7 +107,7 @@ public class XMLHttpRequestImpl implements XMLHttpRequest {
 
 	private void fireReadyStateChanged() {
 		if (onreadystatechange != null) {
-			onreadystatechange.handleEvent(new EventImpl() {});
+			onreadystatechange.handleEvent(eventFactory.create());
 		}
 	}
 

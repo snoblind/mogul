@@ -1,5 +1,7 @@
 package com.github.snoblind.mogul.demo;
 
+import com.github.snoblind.mogul.Event;
+import com.github.snoblind.mogul.event.EventImpl;
 import com.github.snoblind.mogul.Navigator;
 import com.github.snoblind.mogul.rhino.Console;
 import com.github.snoblind.mogul.rhino.RhinoWindow;
@@ -7,6 +9,8 @@ import com.github.snoblind.mogul.rhino.XMLHttpRequestConstructor;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 import jline.console.ConsoleReader;
+import org.apache.commons.collections4.Factory;
+import org.apache.commons.collections4.functors.InstantiateFactory;
 import org.apache.http.client.HttpClient;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.EcmaError;
@@ -35,8 +39,10 @@ public class Demo implements Callable<Void> {
 	private Demo() {}
 	
 	public Void call() throws IOException {
-		ConsoleReader jline = new ConsoleReader();
-		Context context = Context.enter();
+        final Factory<? extends Event> eventFactory = new InstantiateFactory<EventImpl>(EventImpl.class);
+        final XMLHttpRequestConstructor requestConstructor = new XMLHttpRequestConstructor(httpClient, eventFactory);
+        final ConsoleReader jline = new ConsoleReader();
+        final Context context = Context.enter();
 		LOGGER.debug("Rhino Context entered.");
 		context.initStandardObjects(window);
 		LOGGER.debug("Standard objects initialized.");
@@ -45,7 +51,7 @@ public class Demo implements Callable<Void> {
 		putProperty(window, "navigator", navigator);
 		putProperty(window, "out", System.out);
 		putProperty(window, "window", window);
-        defineProperty(window, "XMLHttpRequest", new XMLHttpRequestConstructor(httpClient), DONTENUM);
+		defineProperty(window, "XMLHttpRequest", requestConstructor, DONTENUM);
 		LOGGER.debug("Defined console, err, navigator, out, window, and XMLHttpRequest.");
 		context.evaluateString(window, EXIT_FUNCTION, null, 0, null);
 		LOGGER.debug("Defined exit() function.");
