@@ -59,8 +59,8 @@ public class MapEventDispatcher extends AbstractEventDispatcher {
 		else {
 			listeners = Collections.unmodifiableCollection(listeners);
 		}
-		if (LOG.isDebugEnabled()) {
-			LOG.debug(format("%,d event listeners registered for target %s.", listeners.size(), target));
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug(format("%,d event listeners registered for target %s.", listeners.size(), target));
 		}
 		return listeners;
 	}

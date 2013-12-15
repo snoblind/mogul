@@ -6,7 +6,6 @@ import com.github.snoblind.mogul.ExtendedHTMLElement;
 import com.github.snoblind.mogul.ExtendedHTMLFormElement;
 import com.github.snoblind.mogul.Location;
 import com.github.snoblind.mogul.Window;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,8 +13,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Element;
 import org.w3c.dom.html.HTMLCollection;
@@ -26,7 +25,7 @@ import static org.jsoup.Connection.KeyVal;
 
 public class JSoupFormElement extends JSoupElement implements ExtendedHTMLFormElement {
 
-	protected static final Log LOG = LogFactory.getLog(JSoupFormElement.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(JSoupFormElement.class);
 
 	public JSoupFormElement(Element element, JSoupDocument ownerDocument) {
 		super(element, ownerDocument);
@@ -44,20 +43,20 @@ public class JSoupFormElement extends JSoupElement implements ExtendedHTMLFormEl
 				list.add(keyVal);
 			}
 		}
-		if (LOG.isDebugEnabled()) {
+		if (LOGGER.isDebugEnabled()) {
 			Writer buffer = new StringWriter();
 			PrintWriter writer = new PrintWriter(buffer, true);
 			for (KeyVal keyVal: list) {
 				writer.printf("%s: %s\n", keyVal.key(), keyVal.value());
 			}
-			LOG.debug(buffer.toString());
+			LOGGER.debug(buffer.toString());
 		}
 		return list;
 	}
 	
 	protected KeyVal resolveKeyVal(ExtendedHTMLElement element) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug(element.getOuterHTML());
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug(element.getOuterHTML());
 		}
 		if (element instanceof HTMLInputElement) {
 			return resolveKeyVal((HTMLInputElement)element);

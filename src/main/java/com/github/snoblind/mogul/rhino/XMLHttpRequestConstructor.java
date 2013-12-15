@@ -1,7 +1,7 @@
 package com.github.snoblind.mogul.rhino;
 
 import com.github.snoblind.mogul.Event;
-import com.github.snoblind.mogul.xmlhttp.XMLHttpRequestImpl;
+import com.github.snoblind.mogul.xmlhttp.ApacheCommonsXMLHttpRequest;
 import org.apache.commons.collections4.Factory;
 import org.apache.http.client.HttpClient;
 import org.mozilla.javascript.BaseFunction;
@@ -28,6 +28,6 @@ public class XMLHttpRequestConstructor extends BaseFunction {
 
 	public Scriptable construct(final Context context, final Scriptable scope, Object[] args) {
 		LOGGER.debug("construct({}, {}, {})", context, scope, args);
-		return new XMLHttpRequestAdapter(context, scope, new XMLHttpRequestImpl(client, eventFactory));
+		return new XMLHttpRequestAdapter(context, scope, new ApacheCommonsXMLHttpRequest(client, eventFactory));
 	}
 }
